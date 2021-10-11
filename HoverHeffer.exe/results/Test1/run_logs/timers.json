@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1633975993",
+        "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\wingl\\Documents\\GitHub\\MachineLearning\\HoverHeffer.exe\\venv\\Scripts\\mlagents-learn --run-id=Test1",
+        "mlagents_version": "0.27.0",
+        "mlagents_envs_version": "0.27.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.0+cu110",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1633976009"
+    },
+    "total": 15.839336999999999,
+    "count": 1,
+    "self": 0.004234999999997768,
+    "children": {
+        "run_training.setup": {
+            "total": 0.11336740000000012,
+            "count": 1,
+            "self": 0.11336740000000012
+        },
+        "TrainerController.start_learning": {
+            "total": 15.721734600000001,
+            "count": 1,
+            "self": 0.00027700000000407954,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 15.7214499,
+                    "count": 1,
+                    "self": 15.7214499
+                },
+                "trainer_threads": {
+                    "total": 8.999999998593466e-07,
+                    "count": 1,
+                    "self": 8.999999998593466e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 6.799999997753048e-06,
+                    "count": 1,
+                    "self": 6.799999997753048e-06
+                }
+            }
+        }
+    }
+}
