@@ -12,20 +12,24 @@ public class GameManager : MonoBehaviour
     public int cowCounter;
 
     public GameObject gameOver;
+    public GameObject cow;
+    public int numCowWanted;
+    public GameObject[] cowsToSpawn;
 
     private void Awake()
     {
-        instance = this;    
+        instance = this;
+
+        CowSpawn();
     }
 
     void Start()
     {
-        GameObject[] cows;
-        cows = GameObject.FindGameObjectsWithTag("reward");
-        foreach(GameObject cow in cows)
-        {
-            cowCounter++;
-        }
+        //cows = GameObject.FindGameObjectsWithTag("reward");
+        //foreach (GameObject cow in cows)
+        //{
+        //    cowCounter++;
+        //}
     }
 
     
@@ -55,5 +59,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Main");
         //SceneManager.LoadSceneAsync("Main");
+    }
+
+    private void CowSpawn()
+    {
+        for (var i = 1; i <= numCowWanted; i++)
+        {
+            var position = new Vector3(transform.position.x + Random.Range(-150f, 150f), 5.5f, transform.position.z + Random.Range(-150f, 150f));
+            Instantiate(cow, position, transform.rotation);
+            cowCounter++;
+        }
+
+        //Invoke("cowSpawn", Random(new Vector3(transform.position.x + Random.Range(-150f, 150f), 5.5f, transform.position.z + Random.Range(-150f, 150f));
     }
 }

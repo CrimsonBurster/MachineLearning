@@ -10,6 +10,7 @@ public class MoveToGoalAgent : Agent
 
     private Rigidbody rigidBody;
     public float moveSpeed;
+    private float timer;
 
     private void Start()
     {
@@ -47,11 +48,15 @@ public class MoveToGoalAgent : Agent
     {
         if(other.gameObject.tag == "reward")
         {
-            SetReward(+1f);
-            Debug.Log("reward collected");
-            EndEpisode();
+            timer += Time.deltaTime;
+            if(timer >= 3f)
+            {
+                SetReward(+1f);
+                Debug.Log("reward collected");
+                timer = 0f;
+            }
         }
-        else if(other.gameObject.tag == "Edge")
+        if(other.gameObject.tag == "Edge")
         {
             SetReward(-1f);
             Debug.Log("wall touched");
@@ -59,5 +64,13 @@ public class MoveToGoalAgent : Agent
             EndEpisode();
         }
         
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "reward")
+        {
+            timer = 0;
+        }
     }
 }
