@@ -16,7 +16,7 @@ public class MoveToGoalAgent : Agent
         rigidBody = GetComponent<Rigidbody>();
     }
 
-    //start of simulation
+    //start of simulation5
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(0, 4.5f, 0f);

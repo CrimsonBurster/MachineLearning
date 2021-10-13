@@ -6,6 +6,7 @@ TagManager:
   tags:
   - reward
   - Edge
+  - Enemy
   layers:
   - Default
   - TransparentFX
