@@ -26,6 +26,7 @@ public class EnemyHealth : MonoBehaviour
         healthBar.value = currentHealth;
         if(currentHealth <= 0)
         {
+            GameManager.instance.AlienLost();
             Destroy(gameObject);
         }
     }

@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public Text cowText;
-    public int cowCounter;
+    public Text cowText, alienText;
+    public int cowCounter, alienCounter;
 
-    public GameObject gameOver;
+    public GameObject gameOver, winScreen;
     public GameObject cow;
     public int numCowWanted;
     public GameObject[] cowsToSpawn;
@@ -25,6 +25,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        var aliens = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject alien in aliens)
+        {
+            alienCounter++;
+        }
         //cows = GameObject.FindGameObjectsWithTag("reward");
         //foreach (GameObject cow in cows)
         //{
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour
     private void LateUpdate()
     {
         cowText.text = "COWS LEFT: " + cowCounter.ToString();
+        alienText.text = "ALIENS LEFT: " + alienCounter.ToString();
     }
 
     public void CowLost()
@@ -54,11 +61,32 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    public void AlienLost()
+    {
+        alienCounter--;
+        if(alienCounter <= 0)
+        {
+            WonGame();
+        }
+        
+    }
+
+    private void WonGame()
+    {
+        Time.timeScale = 0;
+        winScreen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void RetryButton()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Main");
-        //SceneManager.LoadSceneAsync("Main");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     private void CowSpawn()
