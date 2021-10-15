@@ -94,7 +94,8 @@ public class GameManager : MonoBehaviour
         for (var i = 1; i <= numCowWanted; i++)
         {
             var position = new Vector3(transform.position.x + Random.Range(-150f, 150f), 5.5f, transform.position.z + Random.Range(-150f, 150f));
-            Instantiate(cow, position, transform.rotation);
+            var newCow = Instantiate(cow, position, transform.rotation);
+            newCow.transform.parent = gameObject.transform;
             cowCounter++;
         }
 
