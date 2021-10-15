@@ -11,6 +11,8 @@ public class MoveToGoalAgent : Agent
     private Rigidbody rigidBody;
     public float moveSpeed;
     private float timer;
+    private GameManager gameManager;
+    private Cow nearestCow;
 
     private void Start()
     {
@@ -21,6 +23,8 @@ public class MoveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(0, 4.5f, 0f);
+        rigidBody.velocity = Vector3.zero;
+        FindNewCow();
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -71,6 +75,26 @@ public class MoveToGoalAgent : Agent
         if (other.gameObject.tag == "reward")
         {
             timer = 0;
+        }
+    }
+    private void FindNewCow()
+    {
+        foreach(Cow cow in gameManager.Cows)
+        {
+            if(nearestCow == null)
+            {
+                nearestCow = cow;
+            }
+            else if(cow)
+            {
+                float distanceToCow = Vector3.Distance(cow.transform.position, transform.position);
+                float distanceToCurrentNearestCow = Vector3.Distance(cow.transform.position, transform.position);
+
+                if(distanceToCow < distanceToCurrentNearestCow)
+                {
+                    nearestCow = cow;
+                }
+            }
         }
     }
 }

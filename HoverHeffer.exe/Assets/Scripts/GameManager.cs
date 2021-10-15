@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver, winScreen;
     public GameObject cow;
     public int numCowWanted;
-    public GameObject[] cowsToSpawn;
+   
+    public List<Cow> Cows { get; private set; }
 
     private void Awake()
     {
         instance = this;
-
+        Cows = new List<Cow>();
         CowSpawn();
+        
     }
 
     void Start()
@@ -96,7 +98,11 @@ public class GameManager : MonoBehaviour
             var position = new Vector3(transform.position.x + Random.Range(-150f, 150f), 5.5f, transform.position.z + Random.Range(-150f, 150f));
             var newCow = Instantiate(cow, position, transform.rotation);
             newCow.transform.parent = gameObject.transform;
+            Cow madeCow = newCow.GetComponent<Cow>();
+            Cows.Add(madeCow);
             cowCounter++;
+            Debug.Log("I made a cow" + cowCounter);
+           
         }
 
         //Invoke("cowSpawn", Random(new Vector3(transform.position.x + Random.Range(-150f, 150f), 5.5f, transform.position.z + Random.Range(-150f, 150f));
