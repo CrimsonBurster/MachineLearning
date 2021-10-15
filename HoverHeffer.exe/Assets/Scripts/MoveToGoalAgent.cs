@@ -8,6 +8,7 @@ public class MoveToGoalAgent : Agent
 {
     [SerializeField] private Transform targetTransform;
 
+    private Animator anim;
     private Rigidbody rigidBody;
     public float moveSpeed;
     private float timer;
@@ -16,6 +17,7 @@ public class MoveToGoalAgent : Agent
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -53,6 +55,7 @@ public class MoveToGoalAgent : Agent
         if(other.gameObject.tag == "reward")
         {
             timer += Time.deltaTime;
+            anim.SetTrigger("isPulling");
             if(timer >= 3f)
             {
                 SetReward(+1f);
@@ -74,6 +77,7 @@ public class MoveToGoalAgent : Agent
     {
         if (other.gameObject.tag == "reward")
         {
+            anim.ResetTrigger("isPulling");
             timer = 0;
         }
     }
