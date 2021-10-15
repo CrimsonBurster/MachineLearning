@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver, winScreen;
     public GameObject cow;
     public int numCowWanted;
-    public const float AreaDiameter =  20f;
+    public const float AreaDiameter =  300f;
     public List<Cow> Cows { get; private set; }
 
     private void Awake()
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
             Cow madeCow = newCow.GetComponent<Cow>();
             Cows.Add(madeCow);
             cowCounter++;
-            Debug.Log("I made a cow" + cowCounter);
+            //Debug.Log("I made a cow" + cowCounter);
            
         }
 

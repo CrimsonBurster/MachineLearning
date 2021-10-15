@@ -10,7 +10,7 @@ public class Cow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NewPos();
+       // NewPos();
     }
 
     // Update is called once per frame
@@ -27,15 +27,15 @@ public class Cow : MonoBehaviour
     }
     private void LateUpdate()
     {
-        var vectorToTarget = transform.position - targetLocation;
-        vectorToTarget.y = 0;
-        float dist = vectorToTarget.magnitude;
-        transform.position = Vector3.MoveTowards(transform.position, targetLocation, moveSpeed * Time.deltaTime);
+        //var vectorToTarget = transform.position - targetLocation;
+        //vectorToTarget.y = 0;
+        //float dist = vectorToTarget.magnitude;
+        //transform.position = Vector3.MoveTowards(transform.position, targetLocation, moveSpeed * Time.deltaTime);
         
-        if (dist < .5f)
-        {
-            NewPos();
-        }
+        //if (dist < .5f)
+        //{
+        //    NewPos();
+        //}
     }
 
     private void NewPos()

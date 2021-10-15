@@ -13,7 +13,9 @@ public class MoveToGoalAgent : Agent
     public float moveSpeed;
     private float timer;
     private Cow nearestCow;
+    
 
+   
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -29,6 +31,7 @@ public class MoveToGoalAgent : Agent
     }
     public override void OnActionReceived(float[] vectorAction)
     {
+        moveSpeed = 3;
         float moveX = vectorAction[0];
         float moveZ = vectorAction[1];
 
@@ -62,15 +65,21 @@ public class MoveToGoalAgent : Agent
     {
         if(other.gameObject.tag == "reward")
         {
-            timer += Time.deltaTime;
+            GameObject cow = this.gameObject;
+            Cow newCow = cow.GetComponent<Cow>();
             anim.SetTrigger("isPulling");
-            if(timer >= 3f)
-            {
+            
+                GameManager.instance.CowLost();
+                other.gameObject.SetActive(false);
+                other.gameObject.tag = "claimed";
+                Debug.Log("Got Here");
                 SetReward(+1f);
                 Debug.Log("reward collected");
-                timer = 0f;
                 
-            }
+                moveSpeed = 0;
+                GameManager.instance.Cows.Remove(newCow);
+                FindNewCow();
+            
         }
         if(other.gameObject.tag == "Edge")
         {
@@ -92,6 +101,7 @@ public class MoveToGoalAgent : Agent
     }
     private void FindNewCow()
     {
+        
         foreach(Cow cow in GameManager.instance.Cows)
         {
             if(nearestCow == null)

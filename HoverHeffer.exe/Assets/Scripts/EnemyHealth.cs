@@ -31,12 +31,5 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "reward")
-        {
-            GameManager.instance.CowLost();
-            Destroy(other.gameObject);
-        }
-    }
+    
 }
