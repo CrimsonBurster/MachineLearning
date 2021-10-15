@@ -34,14 +34,16 @@ public class MoveToGoalAgent : Agent
     }
     public override void OnActionReceived(float[] vectorAction)
     {
-        moveSpeed = 3;
+        
         float moveX = vectorAction[0];
         float moveZ = vectorAction[1];
         Debug.Log("Finding Speed");
         if(Vector3.Distance(transform.position, targetTransform.position) > 1)
         {
             Debug.Log(targetTransform.position + "this is the current ");
-            transform.position += transform.forward * Time.deltaTime * moveSpeed;
+            Vector3 forward = transform.forward;
+            forward.y = 0;
+            transform.position += forward * Time.deltaTime * moveSpeed;
             //new Vector3(moveX, 0, moveZ)
         }
        
@@ -86,7 +88,6 @@ public class MoveToGoalAgent : Agent
                 SetReward(+1f);
                 Debug.Log("reward collected");
                 
-                moveSpeed = 0;
                 GameManager.instance.Cows.Remove(newCow);
                 FindNewCow();
             
