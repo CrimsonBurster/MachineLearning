@@ -12,7 +12,6 @@ public class MoveToGoalAgent : Agent
     private Rigidbody rigidBody;
     public float moveSpeed;
     private float timer;
-    private GameManager gameManager;
     private Cow nearestCow;
 
     private void Start()
@@ -28,13 +27,6 @@ public class MoveToGoalAgent : Agent
         rigidBody.velocity = Vector3.zero;
         FindNewCow();
     }
-
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        sensor.AddObservation(transform.position);
-        sensor.AddObservation(targetTransform.position);
-    }
-
     public override void OnActionReceived(float[] vectorAction)
     {
         float moveX = vectorAction[0];
@@ -42,6 +34,22 @@ public class MoveToGoalAgent : Agent
 
         transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
     }
+
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        if(nearestCow == null)
+        {
+            sensor.AddObservation(new float[5]);
+            return;
+
+        }
+        sensor.AddObservation(transform.position);
+        Vector3 toCow = nearestCow.CowCenterPosition - transform.position;
+        sensor.AddObservation(toCow.normalized);
+        sensor.AddObservation(toCow.magnitude / GameManager.AreaDiameter);
+    }
+
+   
 
     //Lets player test controls
     public override void Heuristic(float[] actionsOut)
@@ -61,6 +69,7 @@ public class MoveToGoalAgent : Agent
                 SetReward(+1f);
                 Debug.Log("reward collected");
                 timer = 0f;
+                
             }
         }
         if(other.gameObject.tag == "Edge")
@@ -83,13 +92,13 @@ public class MoveToGoalAgent : Agent
     }
     private void FindNewCow()
     {
-        foreach(Cow cow in gameManager.Cows)
+        foreach(Cow cow in GameManager.instance.Cows)
         {
             if(nearestCow == null)
             {
                 nearestCow = cow;
             }
-            else if(cow)
+            else 
             {
                 float distanceToCow = Vector3.Distance(cow.transform.position, transform.position);
                 float distanceToCurrentNearestCow = Vector3.Distance(cow.transform.position, transform.position);

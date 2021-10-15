@@ -126,3 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
+  targetLocation: {x: 0, y: 0, z: 0}
+  cowCollider: {fileID: 3361998992030010034}

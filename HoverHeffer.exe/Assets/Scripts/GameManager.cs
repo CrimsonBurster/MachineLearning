@@ -14,19 +14,20 @@ public class GameManager : MonoBehaviour
     public GameObject gameOver, winScreen;
     public GameObject cow;
     public int numCowWanted;
-   
+    public const float AreaDiameter =  20f;
     public List<Cow> Cows { get; private set; }
 
     private void Awake()
     {
         instance = this;
         Cows = new List<Cow>();
-        CowSpawn();
+       
         
     }
 
     void Start()
     {
+         CowSpawn();
         var aliens = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach (GameObject alien in aliens)

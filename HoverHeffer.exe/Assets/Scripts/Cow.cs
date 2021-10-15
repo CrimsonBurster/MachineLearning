@@ -6,7 +6,7 @@ public class Cow : MonoBehaviour
 {
     public float moveSpeed;
     public Vector3 targetLocation;
-
+    public Collider cowCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +18,13 @@ public class Cow : MonoBehaviour
     {
 
     }
-
+    public Vector3 CowCenterPosition
+    {
+        get
+        {
+            return cowCollider.transform.position;
+        }
+    }
     private void LateUpdate()
     {
         var vectorToTarget = transform.position - targetLocation;
