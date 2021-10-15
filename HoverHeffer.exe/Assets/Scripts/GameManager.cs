@@ -15,13 +15,14 @@ public class GameManager : MonoBehaviour
     public GameObject cow;
     public int numCowWanted;
     public const float AreaDiameter =  300f;
+    public GameObject Alien;
     public List<Cow> Cows { get; private set; }
 
     private void Awake()
     {
         instance = this;
         Cows = new List<Cow>();
-       
+        Instantiate(Alien);
         
     }
 

@@ -13,11 +13,12 @@ public class MoveToGoalAgent : Agent
     public float moveSpeed;
     private float timer;
     private Cow nearestCow;
-    
+    public GameObject Alien;
 
    
     private void Start()
     {
+        
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
     }
@@ -25,8 +26,10 @@ public class MoveToGoalAgent : Agent
     //start of simulation5
     public override void OnEpisodeBegin()
     {
+      
+       
         transform.position = new Vector3(0, 4.5f, 0f);
-        rigidBody.velocity = Vector3.zero;
+        //rigidBody.velocity = Vector3.zero;
         FindNewCow();
     }
     public override void OnActionReceived(float[] vectorAction)
@@ -34,23 +37,30 @@ public class MoveToGoalAgent : Agent
         moveSpeed = 3;
         float moveX = vectorAction[0];
         float moveZ = vectorAction[1];
-
-        transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+        Debug.Log("Finding Speed");
+        if(Vector3.Distance(transform.position, targetTransform.position) > 1)
+        {
+            Debug.Log(targetTransform.position + "this is the current ");
+            transform.position += transform.forward * Time.deltaTime * moveSpeed;
+            //new Vector3(moveX, 0, moveZ)
+        }
+       
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        if(nearestCow == null)
-        {
-            sensor.AddObservation(new float[5]);
-            return;
+    //    if(nearestCow == null)
+    //    {
+    //        sensor.AddObservation(new float[5]);
+    //        return;
 
-        }
+    //    }
         sensor.AddObservation(transform.position);
-        Vector3 toCow = nearestCow.CowCenterPosition - transform.position;
-        sensor.AddObservation(toCow.normalized);
-        sensor.AddObservation(toCow.magnitude / GameManager.AreaDiameter);
-    }
+        sensor.AddObservation(targetTransform.position);
+    // Vector3 toCow = nearestCow.CowCenterPosition - transform.position;
+    // sensor.AddObservation(toCow.normalized);
+    // sensor.AddObservation(toCow.magnitude / GameManager.AreaDiameter);
+}
 
    
 
@@ -101,7 +111,8 @@ public class MoveToGoalAgent : Agent
     }
     private void FindNewCow()
     {
-        
+        targetTransform = GameObject.FindWithTag("reward").transform;
+        transform.LookAt(targetTransform);
         foreach(Cow cow in GameManager.instance.Cows)
         {
             if(nearestCow == null)

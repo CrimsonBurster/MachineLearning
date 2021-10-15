@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour
 {
     public static EnemyHealth instance;
-
+    public GameObject Alien;
     public Slider healthBar;
     public int currentHealth;
     public int maxHealth;
     private void Awake()
     {
         instance = this;
+        healthBar = GameObject.FindGameObjectWithTag("healthbar").GetComponent<Slider>();
+
     }
 
     private void Start()
@@ -27,7 +29,7 @@ public class EnemyHealth : MonoBehaviour
         if(currentHealth <= 0)
         {
             GameManager.instance.AlienLost();
-            Destroy(gameObject);
+            Alien.SetActive(false);
         }
     }
 
