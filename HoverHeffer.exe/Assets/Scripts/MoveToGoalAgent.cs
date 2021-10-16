@@ -79,7 +79,7 @@ public class MoveToGoalAgent : Agent
         {
             GameObject cow = this.gameObject;
             Cow newCow = cow.GetComponent<Cow>();
-            anim.SetTrigger("isPulling");
+            anim.SetTrigger("tractorOn");
             
                 GameManager.instance.CowLost();
                 other.gameObject.SetActive(false);
@@ -106,7 +106,7 @@ public class MoveToGoalAgent : Agent
     {
         if (other.gameObject.tag == "reward")
         {
-            anim.ResetTrigger("isPulling");
+            anim.ResetTrigger("tractorOn");
             timer = 0;
         }
     }
