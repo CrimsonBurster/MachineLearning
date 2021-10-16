@@ -18,9 +18,9 @@ public class MoveToGoalAgent : Agent
    
     private void Start()
     {
-        
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
+        FindNewCow();
     }
 
     //start of simulation5
