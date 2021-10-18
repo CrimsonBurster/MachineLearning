@@ -15,7 +15,9 @@ public class MoveToGoalAgent : Agent
     private Cow nearestCow;
     public GameObject Alien;
 
-   
+   /// <summary>
+   /// Find all components for the Machine
+   /// </summary>
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -27,11 +29,15 @@ public class MoveToGoalAgent : Agent
     public override void OnEpisodeBegin()
     {
       
-       
-        transform.position = new Vector3(0, 4.5f, 0f);
+       //Respawns alien at this location
+        transform.position = new Vector3(120f, 4.5f, -8f);
         //rigidBody.velocity = Vector3.zero;
         FindNewCow();
     }
+    /// <summary>
+    /// Find the cow's position that it is going after and heads that way
+    /// </summary>
+    /// <param name="vectorAction"></param>
     public override void OnActionReceived(float[] vectorAction)
     {
         
@@ -51,18 +57,11 @@ public class MoveToGoalAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-    //    if(nearestCow == null)
-    //    {
-    //        sensor.AddObservation(new float[5]);
-    //        return;
-
-    //    }
+    
         sensor.AddObservation(transform.position);
         sensor.AddObservation(targetTransform.position);
-    // Vector3 toCow = nearestCow.CowCenterPosition - transform.position;
-    // sensor.AddObservation(toCow.normalized);
-    // sensor.AddObservation(toCow.magnitude / GameManager.AreaDiameter);
-}
+   
+    }
 
    
 
@@ -72,9 +71,13 @@ public class MoveToGoalAgent : Agent
         actionsOut[0] = Input.GetAxisRaw("Horizontal");
         actionsOut[1] = Input.GetAxisRaw("Vertical");
     }
-
+    /// <summary>
+    /// Collects cows if the alien runs over them
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        //If the object is a cow
         if(other.gameObject.tag == "reward")
         {
             GameObject cow = this.gameObject;
@@ -92,6 +95,7 @@ public class MoveToGoalAgent : Agent
                 FindNewCow();
             
         }
+        //if the object is the boundary
         if(other.gameObject.tag == "Edge")
         {
             SetReward(-1f);
@@ -101,7 +105,10 @@ public class MoveToGoalAgent : Agent
         }
         
     }
-
+    /// <summary>
+    /// Unused logic, was meant to turn a tractor beam on to draw a cow into the ship
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "reward")
@@ -110,6 +117,9 @@ public class MoveToGoalAgent : Agent
             timer = 0;
         }
     }
+    /// <summary>
+    /// Logic to find a new cow to go after once one is destroyed
+    /// </summary>
     private void FindNewCow()
     {
         targetTransform = GameObject.FindWithTag("reward").transform;

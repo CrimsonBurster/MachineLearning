@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Logic used to discover if the player has left the play area, if they have then they will be returned to the center point of the map after a certain amount of time
+/// </summary>
 public class OutOfBounds : MonoBehaviour
 {
     public GameObject outPanel;

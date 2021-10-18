@@ -11,7 +11,9 @@ public class JetAnimator : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Called to make the animations move with the mouse
+    /// </summary>
     void Update()
     {
         float mouseSpeed = Input.GetAxis("Mouse X");

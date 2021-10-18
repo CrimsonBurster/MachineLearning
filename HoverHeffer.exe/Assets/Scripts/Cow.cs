@@ -37,7 +37,9 @@ public class Cow : MonoBehaviour
         //    NewPos();
         //}
     }
-
+    /// <summary>
+    /// Randomly spawn these gameObjects around the map, in a set parameter
+    /// </summary>
     private void NewPos()
     {
         targetLocation = new Vector3(transform.position.x + Random.Range(-2, 2f), transform.position.y, transform.position.z + Random.Range(-2f, 2f));

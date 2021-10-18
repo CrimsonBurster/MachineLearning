@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     public const float AreaDiameter =  300f;
     public GameObject Alien;
     public List<Cow> Cows { get; private set; }
-
+    /// <summary>
+    /// Establishes that the instance is this script, creates a new list of cows to store the newly created gameobjects, and creates the enenmy. Is launched when the game is first started.
+    /// </summary>
     private void Awake()
     {
         instance = this;
@@ -28,9 +30,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //Spawns the cows across the map
          CowSpawn();
         var aliens = GameObject.FindGameObjectsWithTag("Enemy");
-
+        //Finds how many aliens are alive, mostly unused in our aspect of the game
         foreach (GameObject alien in aliens)
         {
             alienCounter++;
@@ -42,13 +45,17 @@ public class GameManager : MonoBehaviour
         //}
     }
 
-    
+    /// <summary>
+    /// Used to update the text to show how many cows/aliens are left alive
+    /// </summary>
     private void LateUpdate()
     {
         cowText.text = "COWS LEFT: " + cowCounter.ToString();
         alienText.text = "ALIENS LEFT: " + alienCounter.ToString();
     }
-
+    /// <summary>
+    /// Shoots the code to a lost condition if there are no cows remaining
+    /// </summary>
     public void CowLost()
     {
         cowCounter--;
@@ -57,14 +64,18 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
     }
-
+    /// <summary>
+    /// Loss conditions for new screen
+    /// </summary>
     public void GameOver()
     {
         Time.timeScale = 0;
         gameOver.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
-
+    /// <summary>
+    /// Shoots the code to a win condition if there are no enemies remaining
+    /// </summary>
     public void AlienLost()
     {
         alienCounter--;
@@ -74,25 +85,33 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
+    /// <summary>
+    /// Win conditions for new screen
+    /// </summary>
     private void WonGame()
     {
         Time.timeScale = 0;
         winScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }
-
+    /// <summary>
+    /// Allows player to play the game again
+    /// </summary>
     public void RetryButton()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Main");
     }
-
+    /// <summary>
+    /// Force close game
+    /// </summary>
     public void ExitGame()
     {
         Application.Quit();
     }
-
+    /// <summary>
+    /// Used to spawn cows across the map, using a for loop to create a certain number of cows specified as well as find a random location in a set range to spawn them
+    /// </summary>
     private void CowSpawn()
     {
         for (var i = 1; i <= numCowWanted; i++)

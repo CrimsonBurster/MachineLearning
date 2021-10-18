@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        //Finding the enemy health bar in the UI to apply health reduction when hit
         healthBar = GameObject.FindGameObjectWithTag("healthbar").GetComponent<Slider>();
 
     }
@@ -21,7 +22,10 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
-
+    /// <summary>
+    /// Apply damage if enemy collides with a bullet
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;

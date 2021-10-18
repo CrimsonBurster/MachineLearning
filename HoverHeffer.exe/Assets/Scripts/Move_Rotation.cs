@@ -52,7 +52,7 @@ public class Move_Rotation : MonoBehaviour
                 shootTimer = 0f;
             }
         }
-
+        //Boost management
         if (Input.GetKey(KeyCode.LeftShift) && boostTimer >= 0)
         {
             moveSpeed = boostSpeed;
