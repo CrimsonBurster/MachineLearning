@@ -14,12 +14,14 @@ public class MoveToGoalAgent : Agent
     private float timer;
     private Cow nearestCow;
     public GameObject Alien;
-
+    public AudioClip beam;
+    public AudioSource audio;
    /// <summary>
    /// Find all components for the Machine
    /// </summary>
     private void Start()
     {
+        audio = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody>();
         FindNewCow();
@@ -83,7 +85,9 @@ public class MoveToGoalAgent : Agent
             GameObject cow = this.gameObject;
             Cow newCow = cow.GetComponent<Cow>();
             anim.SetTrigger("tractorOn");
-            
+           
+            audio.clip = beam;
+            audio.Play();
                 GameManager.instance.CowLost();
                 other.gameObject.SetActive(false);
                 other.gameObject.tag = "claimed";
